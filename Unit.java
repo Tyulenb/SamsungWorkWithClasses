@@ -1,19 +1,11 @@
 public class Unit {
-    protected int health = 100;
-    protected int defence = 100;
-    protected int power = 10;
-
-    protected float CriticalChance = 0.1f;
-    protected float ParryChance = 0.1f;
-
-    protected String name = "Vova";
-
-    public Unit(String name){
-        this.name = name;
-        game.CountOfPlayers++;
-    }
-    public Unit(){}
-
+    protected int health;
+    protected int defence;
+    protected int power;
+    protected String type;
+    
+    Unit(){}
+    
     public int getHealth(){
         return health;
     }
@@ -21,24 +13,15 @@ public class Unit {
     public int getDefence() {
         return defence;
     }
-
-    public String getName() {
-        return name;
-    }
-
     public int getPower() {
         return power;
     }
+    
+    public String getType() {
+		return type;
+	}
 
-    public float getCriticalChance() {
-        return CriticalChance;
-    }
-
-    public float getParryChance() {
-        return ParryChance;
-    }
-
-    public void setHealth(int health) {
+	public void setHealth(int health) {
         this.health = health;
     }
 
@@ -50,16 +33,9 @@ public class Unit {
         this.power = power;
     }
 
-    public void setCriticalChance(float criticalChance) {
-        CriticalChance = criticalChance;
-    }
-
-    public void setParryChance(float parryChance) {
-        ParryChance = parryChance;
-    }
 
     public void attack(Unit unit){
-        unit.getDamage(power);
+        unit.getDamage((int)(power*CCR.CriticalHit()));
     }
 
     @Override
@@ -72,7 +48,6 @@ public class Unit {
     }
 
     public void getDamage(int damage){
-        this.health-=damage;
+        this.health-=(CCR.parry((int)(damage - damage*defence*0.01)));
     }
-
 }
